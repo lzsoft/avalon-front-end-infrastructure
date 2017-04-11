@@ -4,6 +4,6 @@
     "authors": ["JingAn Chen"],
     "license": "MIT",
     "keywords": [],
-    "homepage": "https://github.com/lzsoft/avalon-front-end-infrastructure",
+    "homepage": "https://github.com/tingting-io/avalon-front-end-infrastructure",
     "ignore": ["**/.*", "node_modules/", "bower_components/", "test/", "tests/", "readme.md"]
 }
