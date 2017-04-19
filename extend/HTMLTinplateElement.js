@@ -1,3 +1,4 @@
+'use strict';
 window.HTMLTinplateElement = class extends HTMLElement {
     constructor() {
         super();
