@@ -1,0 +1,7 @@
+{
+    "name": "avalon-front-end-infrastructure",
+    "main": "avalon-front-end-infrastructure.html",
+    "license": "MIT",
+    "homepage": "https://github.com/tingting-io/avalon-front-end-infrastructure",
+    "flat": true
+}
