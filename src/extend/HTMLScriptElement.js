@@ -1,4 +1,11 @@
-window.HTMLScriptElement.loadSameNameHTML = async function() {
-    let path = document.currentScript.src.substr(0, document.currentScript.src.length - 3) + '.html';
-    return await (await (fetch(path)).text());
+window.HTMLScriptElement.loadSameNameHTML = function(callback) {
+    fetch(document.currentScript.src.substr(0, document.currentScript.src.length - 3) + '.html').then(function(response) {
+        response.text(function(result) {
+            callback(result);
+        }, function(error) {
+            console.error(error);
+        });
+    }, function(error) {
+        console.error(error);
+    });
 };
