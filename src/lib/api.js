@@ -2,9 +2,22 @@
 window.tingting = {};
 window.tingting.api = {};
 window.tingting.api.targetUrl = "";
-window.tingting.api.get = async function(path, json) {
+window.tingting.api.processResultByContentType = function(result) {
+    switch (result.headers.get('Content-Type')) {
+        case 'application/json':
+            return result.json();
+        case 'multipart/form-data':
+            return result.formData();
+        case 'text/plain':
+        case 'text/html':
+            return result.text();
+        default:
+            return result.blob();
+    }
+};
+window.tingting.api.get = async function(path, data) {
     const auth = window.tingting.auth;
-    let params = Object.keys(json).map((i) => i + '=' + json[i]).join('&');
+    let params = Object.keys(data).map((i) => i + '=' + data[i]).join('&');
     let headers = new Headers();
     headers.append('Content-Type', 'text/plain');
     headers.append("Authorization", auth.get());
@@ -14,17 +27,8 @@ window.tingting.api.get = async function(path, json) {
         headers: headers
     };
     let result = await fetch(window.tingting.api.targetUrl + path + '?' + params, request);
-    switch (result.headers.get('Content-Type')) {
-        case 'application/json':
-            return result.json();
-        case 'multipart/form-data':
-            return result.formData();
-        case 'text/plain':
-            return result.text();
-        default:
-            return result.blob();
-    }
-}
+    return window.tingting.api.processResultByContentType(result);
+};
 window.tingting.api.put = async function(path, data) {
     const auth = window.tingting.auth;
     let headers = new Headers();
@@ -48,17 +52,8 @@ window.tingting.api.put = async function(path, data) {
         body: data
     };
     let result = await fetch(window.tingting.api.targetUrl + path, request);
-    switch (result.headers.get('Content-Type')) {
-        case 'application/json':
-            return result.json();
-        case 'multipart/form-data':
-            return result.formData();
-        case 'text/plain':
-            return result.text();
-        default:
-            return result.blob();
-    }
-}
+    return window.tingting.api.processResultByContentType(result);
+};
 window.tingting.api.delete = async function(path, json) {
     const Auth = window.tingting.auth;
     let headers = new Headers();
@@ -71,17 +66,8 @@ window.tingting.api.delete = async function(path, json) {
         body: JSON.stringify(json)
     };
     let result = await fetch(window.tingting.api.targetUrl + path, request);
-    switch (result.headers.get('Content-Type')) {
-        case 'application/json':
-            return result.json();
-        case 'multipart/form-data':
-            return result.formData();
-        case 'text/plain':
-            return result.text();
-        default:
-            return result.blob();
-    }
-}
+    return window.tingting.api.processResultByContentType(result);
+};
 if (!document.head.querySelector('meta[name="tingting-api-url"]')) {
     throw new RangeError('You must specify API url in <meta name="tingting-api-url"> tag to use avalon-front-end-infrastructure module.');
 } else {
