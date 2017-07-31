@@ -1,4 +1,3 @@
-'use strict';
 window.tingting = {};
 window.tingting.api = {};
 window.tingting.api.targetUrl = "";

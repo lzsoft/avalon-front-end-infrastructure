@@ -1,4 +1,3 @@
-'use strict';
 window.tingting.auth = {}; {
     let authKey = null;
     window.tingting.auth.set = function(val) {
