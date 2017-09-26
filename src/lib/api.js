@@ -15,7 +15,7 @@ window.tingting.api.processResultByContentType = function(response) {
                 return response.blob();
         }
     } else {
-        window.tingting.error.push(response.statusText);
+        window.tingting.error.trigger('TingTing Front End Infrastructure API', response.statusText);
         throw new Error(response.statusText);
     }
 };
