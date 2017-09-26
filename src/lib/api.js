@@ -1,17 +1,22 @@
 window.tingting = {};
 window.tingting.api = {};
 window.tingting.api.targetUrl = "";
-window.tingting.api.processResultByContentType = function(result) {
-    switch (result.headers.get('Content-Type')) {
-        case 'application/json':
-            return result.json();
-        case 'multipart/form-data':
-            return result.formData();
-        case 'text/plain':
-        case 'text/html':
-            return result.text();
-        default:
-            return result.blob();
+window.tingting.api.processResultByContentType = function(response) {
+    if (response.status === 200) {
+        switch (response.headers.get('Content-Type')) {
+            case 'application/json':
+                return response.json();
+            case 'multipart/form-data':
+                return response.formData();
+            case 'text/plain':
+            case 'text/html':
+                return response.text();
+            default:
+                return response.blob();
+        }
+    } else {
+        window.tingting.error.push(response.statusText);
+        throw new Error(response.statusText);
     }
 };
 window.tingting.api.get = async function(path, data) {
@@ -25,8 +30,8 @@ window.tingting.api.get = async function(path, data) {
         mode: "cors",
         headers: headers
     };
-    let result = await fetch(window.tingting.api.targetUrl + path + '?' + params, request);
-    return window.tingting.api.processResultByContentType(result);
+    let response = await fetch(window.tingting.api.targetUrl + path + '?' + params, request);
+    return window.tingting.api.processResultByContentType(response);
 };
 window.tingting.api.put = async function(path, data) {
     const auth = window.tingting.auth;
