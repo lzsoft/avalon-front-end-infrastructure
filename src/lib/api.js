@@ -1,18 +1,18 @@
 window.tingting = {};
 window.tingting.api = {};
 window.tingting.api.targetUrl = "";
-window.tingting.api.processResultByContentType = function(response) {
+window.tingting.api.processResultByContentType = async function(response) {
     if (response.status === 200) {
         switch (response.headers.get('Content-Type')) {
             case 'application/json':
-                return response.json();
+                return await response.json();
             case 'multipart/form-data':
-                return response.formData();
+                return await response.formData();
             case 'text/plain':
             case 'text/html':
-                return response.text();
+                return await response.text();
             default:
-                return response.blob();
+                return await response.blob();
         }
     } else {
         window.tingting.error.trigger('TingTing Front End Infrastructure API', response.statusText);
