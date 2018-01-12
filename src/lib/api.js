@@ -1,7 +1,7 @@
 window.tingting = {};
 window.tingting.api = {};
 window.tingting.api.targetUrl = "";
-window.tingting.api.processResultByContentType = async function(response) {
+window.tingting.api.processResultByContentType = async function (response) {
     if (response.status === 200) {
         switch (response.headers.get('Content-Type')) {
             case 'application/json':
@@ -19,7 +19,7 @@ window.tingting.api.processResultByContentType = async function(response) {
         throw new Error(response.statusText);
     }
 };
-window.tingting.api.get = async function(path, data) {
+window.tingting.api.get = async function (path, data) {
     const auth = window.tingting.auth;
     let params = Object.keys(data).map((i) => i + '=' + data[i]).join('&');
     let headers = new Headers();
@@ -33,7 +33,7 @@ window.tingting.api.get = async function(path, data) {
     let response = await fetch(window.tingting.api.targetUrl + path + '?' + params, request);
     return window.tingting.api.processResultByContentType(response);
 };
-window.tingting.api.put = async function(path, data) {
+window.tingting.api.put = async function (path, data) {
     const auth = window.tingting.auth;
     let headers = new Headers();
     switch (true) {
@@ -58,7 +58,7 @@ window.tingting.api.put = async function(path, data) {
     let result = await fetch(window.tingting.api.targetUrl + path, request);
     return window.tingting.api.processResultByContentType(result);
 };
-window.tingting.api.delete = async function(path, json) {
+window.tingting.api.delete = async function (path, json) {
     const Auth = window.tingting.auth;
     let headers = new Headers();
     headers.append('Content-Type', 'application/json');
@@ -72,9 +72,7 @@ window.tingting.api.delete = async function(path, json) {
     let result = await fetch(window.tingting.api.targetUrl + path, request);
     return window.tingting.api.processResultByContentType(result);
 };
-if (!document.head.querySelector('meta[name="tingting-api-url"]')) {
-    throw new RangeError('You must specify API url in <meta name="tingting-api-url"> tag to use avalon-front-end-infrastructure module.');
-} else {
+if (document.head.querySelector('meta[name="avalon-front-end-infrastructure-api-url"]')) {
     let metaTags = document.head.querySelector('meta[name="tingting-api-url"]').content.split(',');
     for (let m of metaTags) {
         let url = new window.URL(m);
