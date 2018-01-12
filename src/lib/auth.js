@@ -1,9 +1,9 @@
-window.tingting.auth = {}; {
+window.avalon.auth = {}; {
     let authKey = null;
-    window.tingting.auth.set = function(val) {
+    window.avalon.auth.set = function(val) {
         authKey = val;
     };
-    window.tingting.auth.get = function() {
+    window.avalon.auth.get = function() {
         return authKey;
     };
 }

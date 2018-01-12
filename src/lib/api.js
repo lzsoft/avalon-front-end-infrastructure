@@ -1,7 +1,7 @@
-window.tingting = {};
-window.tingting.api = {};
-window.tingting.api.targetUrl = "";
-window.tingting.api.processResultByContentType = async function (response) {
+window.avalon = {};
+window.avalon.api = {};
+window.avalon.api.targetUrl = "";
+window.avalon.api.processResultByContentType = async function (response) {
     if (response.status === 200) {
         switch (response.headers.get('Content-Type')) {
             case 'application/json':
@@ -15,12 +15,12 @@ window.tingting.api.processResultByContentType = async function (response) {
                 return await response.blob();
         }
     } else {
-        window.tingting.error.trigger('TingTing Front End Infrastructure API', response.statusText);
+        window.avalon.error.trigger('Avalon Front End Infrastructure API', response.statusText);
         throw new Error(response.statusText);
     }
 };
-window.tingting.api.get = async function (path, data) {
-    const auth = window.tingting.auth;
+window.avalon.api.get = async function (path, data) {
+    const auth = window.avalon.auth;
     let params = Object.keys(data).map((i) => i + '=' + data[i]).join('&');
     let headers = new Headers();
     headers.append('Content-Type', 'text/plain');
@@ -30,11 +30,11 @@ window.tingting.api.get = async function (path, data) {
         mode: "cors",
         headers: headers
     };
-    let response = await fetch(window.tingting.api.targetUrl + path + '?' + params, request);
-    return window.tingting.api.processResultByContentType(response);
+    let response = await fetch(window.avalon.api.targetUrl + path + '?' + params, request);
+    return window.avalon.api.processResultByContentType(response);
 };
-window.tingting.api.put = async function (path, data) {
-    const auth = window.tingting.auth;
+window.avalon.api.put = async function (path, data) {
+    const auth = window.avalon.auth;
     let headers = new Headers();
     switch (true) {
         case data instanceof window.File:
@@ -55,11 +55,11 @@ window.tingting.api.put = async function (path, data) {
         headers: headers,
         body: data
     };
-    let result = await fetch(window.tingting.api.targetUrl + path, request);
-    return window.tingting.api.processResultByContentType(result);
+    let result = await fetch(window.avalon.api.targetUrl + path, request);
+    return window.avalon.api.processResultByContentType(result);
 };
-window.tingting.api.delete = async function (path, json) {
-    const Auth = window.tingting.auth;
+window.avalon.api.delete = async function (path, json) {
+    const Auth = window.avalon.auth;
     let headers = new Headers();
     headers.append('Content-Type', 'application/json');
     headers.append("Authorization", Auth.get());
@@ -69,18 +69,18 @@ window.tingting.api.delete = async function (path, json) {
         headers: headers,
         body: JSON.stringify(json)
     };
-    let result = await fetch(window.tingting.api.targetUrl + path, request);
-    return window.tingting.api.processResultByContentType(result);
+    let result = await fetch(window.avalon.api.targetUrl + path, request);
+    return window.avalon.api.processResultByContentType(result);
 };
 if (document.head.querySelector('meta[name="avalon-front-end-infrastructure-api-url"]')) {
-    let metaTags = document.head.querySelector('meta[name="tingting-api-url"]').content.split(',');
+    let metaTags = document.head.querySelector('meta[name="avalon-front-end-infrastructure-api-url"]').content.split(',');
     for (let m of metaTags) {
         let url = new window.URL(m);
         if (window.location.hostname === url.hostname) {
-            window.tingting.api.targetUrl = m;
+            window.avalon.api.targetUrl = m;
         }
     }
-    if (!window.tingting.api.targetUrl) {
-        window.tingting.api.targetUrl = metaTags[0];
+    if (!window.avalon.api.targetUrl) {
+        window.avalon.api.targetUrl = metaTags[0];
     }
 }

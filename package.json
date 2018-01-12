@@ -3,7 +3,7 @@
     "main": "min/avalon-front-end-infrastructure.js",
     "version": "1.0.0",
     "license": "MIT",
-    "homepage": "https://github.com/tingting-io/avalon-front-end-infrastructure",
+    "homepage": "https://github.com/tclzcja/avalon-front-end-infrastructure",
     "flat": true,
     "scripts": {
         "init": "npm run init:uglify-es && npm run init:concat-glob-cli && npm run init:del-cli",
