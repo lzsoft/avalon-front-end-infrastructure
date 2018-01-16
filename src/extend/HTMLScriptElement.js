@@ -5,7 +5,7 @@
         let u = document.currentScript.src.substr(0, document.currentScript.src.lastIndexOf('.')) + '.html';
         if (fs) {
             // means we're in Electron/Nodejs
-            let u = new URL(decodeURI(u));
+            u = new URL(decodeURI(u));
             fs.readFile(u, function read(err, data) {
                 if (err) {
                     throw err;
