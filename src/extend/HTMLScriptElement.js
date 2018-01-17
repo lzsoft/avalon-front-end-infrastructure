@@ -1,6 +1,6 @@
 {
-    const fs = require ? require('fs') : null;
-    const URL = require ? require('url').URL : null;
+    const fs = this.require ? require('fs') : null;
+    const URL = this.require ? require('url').URL : null;
     window.HTMLScriptElement.prototype.loadSameNameHTML = function (callback) {
         let u = document.currentScript.src.substr(0, document.currentScript.src.lastIndexOf('.')) + '.html';
         if (fs) {
