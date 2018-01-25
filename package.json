@@ -5,14 +5,13 @@
     "license": "MIT",
     "homepage": "https://github.com/tclzcja/avalon-front-end-infrastructure",
     "flat": true,
+    "dependencies": {
+        "del": "^3.0.0",
+        "gulp": "^3.9.1",
+        "gulp-concat": "^2.6.1",
+        "gulp-minify": "^2.1.0"
+    },
     "scripts": {
-        "init": "npm run init:uglify-es && npm run init:concat-glob-cli && npm run init:del-cli",
-        "init:uglify-es": "npm install uglify-es -g",
-        "init:concat-glob-cli": "npm install concat-glob-cli -g",
-        "init:del-cli": "npm install del-cli -g",
-        "build": "npm run build:concat-glob-cli && npm run build:uglify-es && npm run build:del-cli",
-        "build:concat-glob-cli": "concat-glob-cli -f src/**/*.js -o min/bundle.js",
-        "build:uglify-es": "uglifyjs min/bundle.js -c -m -o min/avalon-front-end-infrastructure.js",
-        "build:del-cli": "del-cli min/bundle.js"
+        "postinstall": "gulp build"
     }
 }
