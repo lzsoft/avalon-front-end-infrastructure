@@ -72,15 +72,18 @@ window.avalon.api.delete = async function (path, json) {
     let result = await fetch(window.avalon.api.targetUrl + path, request);
     return window.avalon.api.processResultByContentType(result);
 };
-if (document.head.querySelector('meta[name="avalon-front-end-infrastructure-api-url"]')) {
-    let metaTags = document.head.querySelector('meta[name="avalon-front-end-infrastructure-api-url"]').content.split(',');
-    for (let m of metaTags) {
-        let url = new window.URL(m);
-        if (window.location.hostname === url.hostname) {
-            window.avalon.api.targetUrl = m;
+window.avalon.api.url = async function () {
+    if (document.head.querySelector('meta[name="avalon-front-end-infrastructure-api-url"]')) {
+        let metaTags = document.head.querySelector('meta[name="avalon-front-end-infrastructure-api-url"]').content.split(',');
+        for (let m of metaTags) {
+            let url = new window.URL(m);
+            if (window.location.hostname === url.hostname) {
+                window.avalon.api.targetUrl = m;
+            }
+        }
+        if (!window.avalon.api.targetUrl) {
+            window.avalon.api.targetUrl = metaTags[0];
         }
     }
-    if (!window.avalon.api.targetUrl) {
-        window.avalon.api.targetUrl = metaTags[0];
-    }
-}
+};
+window.avalon.api.url();
