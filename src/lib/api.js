@@ -81,9 +81,7 @@ window.avalon.api.url = async function () {
                 window.avalon.api.targetUrl = m;
             }
         }
-        if (!window.avalon.api.targetUrl) {
-            window.avalon.api.targetUrl = metaTags[0];
-        }
+        window.avalon.api.targetUrl = metaTags[0];
     }
 };
 window.avalon.api.url();
